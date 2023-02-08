@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Waifu'ed</title>
+
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+	<style type="text/css">
+		@font-face {
+		    font-family: 'Emilys Candy Regular';
+		    font-style: normal;
+		    font-weight: normal;
+		    src: local('Emilys Candy Regular'), url('assets/fonts/EmilysCandy-Regular.woff') format('woff');
+	    }
+	    @font-face {
+		    font-family: 'Letter Gothic Std Medium';
+		    font-style: normal;
+		    font-weight: normal;
+		    src: local('Letter Gothic Std Medium'), url('assets/fonts/LetterGothicStd.woff') format('woff');
+	    }
+	</style>
+
+</head>
+<body x-data class="h-full w-full flex justify-center m-0 p-0 bg-[url('assets/images/bg.png')] bg-repeat">
+
+	<main class="max-w-4xl w-full m-2 sm:m-5 2xl:mx-0">
+		<div class="flex flex-col backdrop-blur-xl bg-white/50 rounded-lg text-center gap-1 p-3 sm:p-5">
+			<h1 class="font-bold text-3xl font-['Emilys_Candy_Regular']">Waifu'ed</h1>
+			<p>A collection of famous people turned into waifus in animes, mangas, and games!</p>
+		</div>
+
+		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-3">
+			<template x-data="{ opened: null }" x-for="(waifu, index) in LIST.sort((a, b) => a.name.localeCompare(b.name))">
+				<div
+					class="flex backdrop-blur-xl border-dashed border-2 border-pink-400 bg-pink-200/40 rounded-md p-3 active:skew-y-3 transition"
+					@click="opened === index ? opened = null : opened = index"
+				>
+					<div x-show="opened !== index" class="flex flex-col items-center text-center">
+						<img :src="'assets/images/waifu/' + deburr(waifu.name).replace(/ /g,'_').toLowerCase() + '.png'" class="rounded-md max-h-48 w-min">
+						<div class="grow flex flex-col justify-center">
+							<p x-text="waifu.name" class="mt-2 font-bold font-['Letter_Gothic_Std_Medium']"></p>
+							<p x-show="waifu.subtitle || waifu.subtitle !== ''" x-text="waifu.subtitle" class="italic font-['Letter_Gothic_Std_Medium']"></p>
+						</div>
+					</div>
+
+					<div x-show="opened === index" class="grow flex flex-col items-center justify-center text-center gap-3">
+						<span x-text="waifu.from.type" class="capitalize backdrop-blur-xl border border-2 border-pink-400 py-px px-1 rounded-md"></span>
+						<a :href="waifu.from.url" target="_blank" x-text="waifu.from.title" class="mt-2 font-bold font-['Letter_Gothic_Std_Medium'] hover:underline"></a>
+					</div>
+				</div>
+			</template>
+		</div>
+
+		<div class="flex flex-col backdrop-blur-xl bg-white/50 rounded-lg text-center gap-1 p-2 mt-5">
+			<p class="font-['Letter_Gothic_Std_Medium']">© <span x-text="new Date().getFullYear()"></span> <a href="https://martii.dev" target="_blank" class="underline hover:no-underline">Martii</a></p>
+		</div>
+	</main>
+
+	<script type="text/javascript" src="assets/js/list.js"></script>
+	<script src="assets/js/deburr.js"></script>
+
+</body>
+</html>
