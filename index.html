@@ -29,18 +29,19 @@
 		<div class="flex flex-col backdrop-blur-xl bg-white/50 rounded-lg text-center gap-1 p-3 sm:p-5">
 			<h1 class="font-bold text-3xl font-['Emilys_Candy_Regular']">Waifu'ed</h1>
 			<p>A collection of famous people turned into waifus in animes, mangas, and games!</p>
+			<p class="italic">I only add the most famous adaptations made in Japan.</p>
 		</div>
 
 		<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-3">
 			<template x-data="{ opened: null }" x-for="(waifu, index) in LIST.sort((a, b) => a.name.localeCompare(b.name))">
 				<div
-					class="flex backdrop-blur-xl border-dashed border-2 border-pink-400 bg-pink-200/40 rounded-md p-3 active:skew-y-3 transition"
+					class="flex flex-col justify-center backdrop-blur-xl border-dashed border-2 border-pink-400 bg-pink-200/40 rounded-md p-3 active:skew-y-3 transition"
 					@click="opened === index ? opened = null : opened = index"
 				>
-					<div x-show="opened !== index" class="flex flex-col items-center text-center">
+					<div x-show="opened !== index" class="grow flex flex-col justify-around items-center text-center gap-3">
 						<img :src="'assets/images/waifu/' + deburr(waifu.name).replace(/ /g,'_').toLowerCase() + '.png'" class="rounded-md max-h-48 w-min">
-						<div class="grow flex flex-col justify-center">
-							<p x-text="waifu.name" class="mt-2 font-bold font-['Letter_Gothic_Std_Medium']"></p>
+						<div class="flex flex-col justify-center">
+							<p x-text="waifu.name" class="font-bold font-['Letter_Gothic_Std_Medium']"></p>
 							<p x-show="waifu.subtitle || waifu.subtitle !== ''" x-text="waifu.subtitle" class="italic font-['Letter_Gothic_Std_Medium']"></p>
 						</div>
 					</div>
